@@ -61,17 +61,17 @@
             {% for room in rooms %}
                 <div class="card">
                     <a href="{% url 'description' room.pk %}" class="stretched-link">
-                        <span class="visually-hidden">View details for room in {{room.location_municipality}}</span>
+                        <span class="visually-hidden">View details for room in {{room.municipality}}</span>
                     </a>
                     
                     {% if room.photos.name %}
-                        <img src="{{ room.photos.url }}" alt="Photo of room in {{room.location_municipality}}" class="card-img">
+                        <img src="{{ room.photos.url }}" alt="Photo of room in {{room.municipality}}" class="card-img">
                     {% else %}
                         <div class="card-no-img">No Photo Available</div>
                     {% endif %}
 
                     <div class="card-content">
-                        <p><strong>Location:</strong> {{room.location_municipality}} {{room.location_ward_num}}, {{room.location_district}}</p>
+                        <p><strong>Location:</strong> {{room.municipality}} {{room.ward_num}}, {{room.district}}</p>
                         <p><strong>Rooms:</strong> {{room.num_of_rooms_available}}</p>
                     </div>
                     
@@ -123,13 +123,13 @@
                             roomsHtml += `
                                 <div class="card">
                                     <a href="${URL_CONFIG.description}${room.pk}/" class="stretched-link">
-                                        <span class="visually-hidden">View details for room in ${room.location_municipality}</span>
+                                        <span class="visually-hidden">View details for room in ${room.municipality}</span>
                                     </a>
                                     
-                                    ${room.photo_url ? `<img src="${room.photo_url}" alt="Photo of room in ${room.location_municipality}" class="card-img">` : '<div class="card-no-img">No Photo Available</div>'}
+                                    ${room.photo_url ? `<img src="${room.photo_url}" alt="Photo of room in ${room.municipality}" class="card-img">` : '<div class="card-no-img">No Photo Available</div>'}
 
                                     <div class="card-content">
-                                        <p><strong>Location:</strong> ${room.location_municipality} ${room.location_ward_num}, ${room.location_district}</p>
+                                        <p><strong>Location:</strong> ${room.municipality} ${room.ward_num}, ${room.district}</p>
                                         <p><strong>Rooms:</strong> ${room.num_of_rooms_available}</p>
                                     </div>
                                     

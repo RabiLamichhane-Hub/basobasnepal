@@ -13,7 +13,7 @@ def startup(request):
 
 def home(request):
     rooms = Room.objects.all()  # Shows latest rooms first
-    districts = Room.objects.values_list('location_district', flat=True).distinct()
+    districts = Room.objects.values_list('district', flat=True).distinct()
     return render(request, 'home.html', {
         'rooms': rooms,
         'districts': districts,
@@ -24,7 +24,7 @@ def filter_rooms(request):
     district = request.GET.get('district', None)
 
     if district:
-        rooms = Room.objects.filter(location_district=district)
+        rooms = Room.objects.filter(district=district)
     else:
         rooms = Room.objects.all()
 
@@ -32,9 +32,9 @@ def filter_rooms(request):
     for room in rooms:
         rooms_data.append({
             'pk': room.pk,
-            'location_municipality': room.location_municipality,
-            'location_ward_num': room.location_ward_num,
-            'location_district': room.location_district,
+            'location_municipality': room.municipality,
+            'location_ward_num': room.ward_num,
+            'location_district': room.district,
             'num_of_rooms_available': room.num_of_rooms_available,
             'photo_url': room.photos.url if room.photos else '',
             'is_owner': request.user == room.owner,
