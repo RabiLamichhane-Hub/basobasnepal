@@ -20,4 +20,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),  # POST logs out
     path('user_profile/', views.profile, name='profile'),
     path('filter_rooms/', views.filter_rooms, name='filter_rooms'),
+    path('ajax/load-districts/', views.load_districts, name='ajax_load_districts'),
+    path('ajax/load-municipalities/', views.load_municipalities, name='ajax_load_municipalities'),
 ]

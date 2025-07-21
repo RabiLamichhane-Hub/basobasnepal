@@ -1,182 +1,188 @@
-/* --- 1. Global Setup & CSS Variables --- */
+/* --- Global Styles & Body --- */
 :root {
-    --primary-bg: #f0f4f8;        /* Light, clean background */
-    --form-bg: #ffffff;           /* White for the form card */
-    --dark-blue: #1a3a53;         /* For headings and strong text */
-    --accent-color: #3498db;      /* Primary color for buttons and focus */
-    --accent-hover: #2980b9;      /* Darker shade for hover */
-    --error-color: #e74c3c;        /* Red for validation errors */
-    --text-primary: #333333;      /* Main input text */
-    --text-secondary: #666666;    /* For labels and help text */
-    --border-color: #d1d9e0;      /* Default border for inputs */
-    --shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    --primary-color: #007bff; /* A vibrant blue */
+    --primary-color-dark: #0056b3;
+    --light-gray-color: #f8f9fa;
+    --medium-gray-color: #dee2e6;
+    --dark-gray-color: #6c757d;
+    --text-color: #212529;
+    --background-color: #eef2f7; /* A soft, calming background */
+    --border-radius: 8px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--primary-bg);
-    color: var(--text-secondary);
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align to top to see start of form on mobile */
+    align-items: center;
     min-height: 100vh;
-    margin: 0;
-    padding: 40px 20px;
-    box-sizing: border-box;
+    padding: 2rem 0;
 }
 
-/* --- 2. Main Form Container --- */
-.rental-form {
-    background-color: var(--form-bg);
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
+/* --- Form Container --- */
+.form-container {
+    background-color: #ffffff;
+    padding: 2.5rem 3rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
     width: 100%;
-    max-width: 600px; /* A bit wider for more complex forms */
-    box-sizing: border-box;
+    max-width: 700px;
+    margin: 1rem;
 }
 
-.rental-form h1 {
-    color: var(--dark-blue);
-    font-size: 2rem;
-    font-weight: 600;
+/* --- Form Header --- */
+.form-header {
     text-align: center;
-    margin: 0 0 10px 0;
-}
-.rental-form .form-description {
-    text-align: center;
-    margin: 0 0 30px 0;
-    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
 }
 
-
-/* --- 3. Form Field & Label Styling (via Django's <p> tags) --- */
-.rental-form p {
-    margin: 0 0 20px 0;
-    display: flex;
-    flex-direction: column;
+.form-header h1 {
+    font-weight: 700;
+    font-size: 2.25rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
 }
 
-.rental-form label {
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: var(--text-secondary);
-}
-
-.rental-form input,
-.rental-form textarea,
-.rental-form select {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+.form-header p {
     font-size: 1rem;
-    color: var(--text-primary);
-    background-color: #fcfdff;
-    box-sizing: border-box;
+    color: var(--dark-gray-color);
+}
+
+/* --- Fieldsets & Legends --- */
+fieldset {
+    border: none;
+    margin-bottom: 2rem;
+}
+
+legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    border-bottom: 1px solid var(--medium-gray-color);
+}
+
+/* --- Form Groups, Labels, and Inputs --- */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+/* Styling for all text inputs, textareas, and select dropdowns rendered by Django */
+input[type="text"],
+input[type="number"],
+input[type="tel"], /* assuming contact_number is type tel */
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    border: 1px solid var(--medium-gray-color);
+    border-radius: var(--border-radius);
+    background-color: var(--light-gray-color);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.rental-form input:focus,
-.rental-form textarea:focus,
-.rental-form select:focus {
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
     outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Soft focus ring */
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    background-color: #fff;
 }
 
-.rental-form textarea {
+textarea {
+    resize: vertical; /* Allow vertical resizing, not horizontal */
     min-height: 120px;
-    resize: vertical;
 }
 
-/* --- 4. Styling for Django's Help Text & Error Messages --- */
-.rental-form .helptext {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-top: 8px;
-    font-style: italic;
+/* Specific styling for disabled dropdowns */
+select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    color: var(--dark-gray-color);
 }
 
-/* This is for the list of errors above a field */
-.rental-form .errorlist {
-    list-style-type: none;
-    padding: 0;
-    margin: 5px 0 0 0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--error-color);
+/* --- File Input Styling (The tricky one!) --- */
+input[type="file"] {
+    font-size: 0.95rem;
+    color: var(--dark-gray-color);
 }
-
-/* This targets the input field that has an error */
-.rental-form .errorlist + input,
-.rental-form .errorlist + textarea,
-.rental-form .errorlist + select {
-    border-color: var(--error-color);
-}
-.rental-form .errorlist + input:focus,
-.rental-form .errorlist + textarea:focus,
-.rental-form .errorlist + select:focus {
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
-}
-
-
-/* --- 5. Custom Checkbox Styling --- */
-/* Target the <p> tag that contains a checkbox */
-.rental-form p:has(input[type="checkbox"]) {
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-}
-.rental-form input[type="checkbox"] {
-    width: auto; /* Override default width */
-    accent-color: var(--accent-color); /* Easiest way for a modern look */
-    width: 1.2em;
-    height: 1.2em;
-}
-.rental-form p:has(input[type="checkbox"]) label {
-    margin-bottom: 0; /* Remove margin from label next to checkbox */
-    font-weight: 400;
-    order: 2; /* Puts label after the checkbox */
-}
-
-
-/* --- 6. Submit Button --- */
-.rental-form .button-wrapper {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.rental-form button[type="submit"] {
-    background-color: var(--accent-color);
-    color: white;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 14px 20px;
+/* Style the "Choose File" button */
+input[type="file"]::file-selector-button {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--primary-color);
+    color: #ffffff;
     border: none;
-    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    border-radius: var(--border-radius);
+    margin-right: 1rem;
     cursor: pointer;
-    width: 100%;
+    transition: background-color 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+/* --- Form Actions & Submit Button --- */
+.form-actions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.submit-btn {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
     transition: background-color 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.rental-form button[type="submit"]:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
+.submit-btn:hover {
+    background-color: var(--primary-color-dark);
+    transform: translateY(-2px); /* Subtle lift effect */
 }
 
+/* --- Responsive Design for Smaller Screens --- */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 2rem 1.5rem;
+    }
 
-/* --- 7. Responsive Adjustments --- */
-@media (max-width: 600px) {
-    body {
-        padding: 20px 10px;
-    }
-    .rental-form {
-        padding: 25px;
-    }
-    .rental-form h1 {
+    .form-header h1 {
         font-size: 1.8rem;
+    }
+
+    legend {
+        font-size: 1.1rem;
     }
 }

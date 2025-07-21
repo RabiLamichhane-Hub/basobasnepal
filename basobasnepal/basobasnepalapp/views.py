@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Room
-from .forms import RoomForm
+from .models import Room, Province, Municipality, District
+from .forms import RoomForm, LocationFilterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from allauth.socialaccount.models import SocialAccount
@@ -44,14 +44,32 @@ def filter_rooms(request):
 
 @login_required(login_url='custom_login')
 def landlord(request):
+    provinces = Province.objects.all()
+
     if request.method == 'POST':
         form = RoomForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            room = form.save(commit=False)
+            # Assign foreign keys manually from POST data
+            province_id = request.POST.get('province')
+            district_id = request.POST.get('district')
+            municipality_id = request.POST.get('municipality')
+
+            if province_id:
+                room.province = Province.objects.get(pk=province_id)
+            if district_id:
+                room.district = District.objects.get(pk=district_id)
+            if municipality_id:
+                room.municipality = Municipality.objects.get(pk=municipality_id)
+
+            room.owner = request.user
+            room.save()
             return redirect('home')
     else:
         form = RoomForm()
-    return render(request, 'landlord.html', {'form' : form})
+
+    return render(request, 'landlord.html', {'form': form, 'provinces': provinces})
+
 
 def description(request, pk):
     rooms = get_object_or_404(Room, pk= pk)
@@ -103,3 +121,17 @@ def profile(request):
         'user': request.user,
         'picture_url': picture_url
     })
+
+def load_districts(request):
+    province_id = request.GET.get('province_id')
+    districts = []
+    if province_id:
+        districts = list(District.objects.filter(province_id=province_id).values('id', 'name'))
+    return JsonResponse(districts, safe=False)
+
+def load_municipalities(request):
+    district_id = request.GET.get('district_id')
+    municipalities = []
+    if district_id:
+        municipalities = list(Municipality.objects.filter(district_id=district_id).values('id', 'name'))
+    return JsonResponse(municipalities, safe=False)
