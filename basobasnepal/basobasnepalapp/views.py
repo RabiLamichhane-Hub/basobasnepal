@@ -4,6 +4,7 @@ from .forms import RoomForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from allauth.socialaccount.models import SocialAccount
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -11,8 +12,35 @@ def startup(request):
     return render(request, 'startup.html')
 
 def home(request):
-    rooms = Room.objects.all()
-    return render(request, 'home.html', {'rooms':rooms, 'user': request.user})
+    rooms = Room.objects.all()  # Shows latest rooms first
+    districts = Room.objects.values_list('location_district', flat=True).distinct()
+    return render(request, 'home.html', {
+        'rooms': rooms,
+        'districts': districts,
+        'user': request.user
+    })
+
+def filter_rooms(request):
+    district = request.GET.get('district', None)
+
+    if district:
+        rooms = Room.objects.filter(location_district=district)
+    else:
+        rooms = Room.objects.all()
+
+    rooms_data = []
+    for room in rooms:
+        rooms_data.append({
+            'pk': room.pk,
+            'location_municipality': room.location_municipality,
+            'location_ward_num': room.location_ward_num,
+            'location_district': room.location_district,
+            'num_of_rooms_available': room.num_of_rooms_available,
+            'photo_url': room.photos.url if room.photos else '',
+            'is_owner': request.user == room.owner,
+        })
+
+    return JsonResponse({'rooms': rooms_data})
 
 @login_required(login_url='custom_login')
 def landlord(request):

@@ -19,4 +19,5 @@ urlpatterns = [
     path('logout/confirm/', views.logout_confirm, name='logout_confirm'),  # GET shows confirmation
     path('logout/', views.logout_view, name='logout'),  # POST logs out
     path('user_profile/', views.profile, name='profile'),
+    path('filter_rooms/', views.filter_rooms, name='filter_rooms'),
 ]

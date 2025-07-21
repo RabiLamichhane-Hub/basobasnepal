@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/for_form.css">
+    <link rel="stylesheet" href="{% static 'css/for_form.css' %}">
     <title>Let for Rent</title>
+    <!-- Add Google Font for a better look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <form method="POST" enctype="multipart/form-data" class="for_form">
+
+    <form method="POST" enctype="multipart/form-data" class="rental-form">
         {% csrf_token %}
+
+        <h1>List Your Property</h1>
+        <p class="form-description">Fill out the details below to find your next tenant.</p>
+        
         {{ form.as_p }}
-        <button type="submit">Lend</button>
+
+        <div class="button-wrapper">
+            <button type="submit">Submit Listing</button>
+        </div>
     </form>
+    
 </body>
 </html>

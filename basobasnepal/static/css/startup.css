@@ -1,64 +1,120 @@
-/* --- 1. Global & Body Setup --- */
+/* --- 1. Global Setup & CSS Variables --- */
+/* Using CSS variables makes changing the theme incredibly easy. */
+:root {
+    --dark-blue: #1b3c53;      /* rgb(27, 60, 83) */
+    --accent-blue: #456882;    /* A slightly lighter, more vibrant blue */
+    --text-light: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
 body {
     margin: 0;
     height: 100vh;
-    width: 100vw;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden; /* Prevents scrollbars */
+
+    /* IMPROVEMENT: A dynamic gradient background adds depth */
+    background: radial-gradient(circle, var(--accent-blue) 0%, var(--dark-blue) 100%);
+    
+    /* Center the main content */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(27, 60, 83);
-    position: relative; /* Needed for the absolutely positioned .landlord */
-    font-family: 'Poppins', sans-serif; /* A clean, modern font */
-    overflow: hidden; /* Prevents scrollbars from appearing */
 }
 
-/* --- 2. Main Content Wrapper --- */
-/* This new div centers the logo and button vertically */
+/* --- 2. Layout Containers --- */
 .main-content {
     display: flex;
-    flex-direction: column; /* Stacks items top-to-bottom */
-    align-items: center;    /* Centers items horizontally */
-    gap: 25px;              /* Creates space between the logo and the button */
+    flex-direction: column;
+    align-items: center;
+    gap: 35px; /* Increased space for better visual separation */
+    
+    /* IMPROVEMENT: A subtle fade-in animation on page load */
+    animation: fadeIn 1s ease-in-out;
 }
 
-/* --- 3. Logo Styling --- */
+.corner-link-container {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+/* --- 3. Components (Logo & Buttons) --- */
 .logo {
     width: 150px;
     height: 150px;
-    border-radius: 50%; /* Makes the logo circular */
-    object-fit: cover;  /* Prevents the image from stretching or squishing */
-    border: 4px solid rgb(69, 104, 130); /* Adds a nice border */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Gives it depth */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--text-light);
+    box-shadow: 0 8px 25px var(--shadow-color);
+    
+    /* IMPROVEMENT: A subtle floating animation to add life */
+    animation: float 6s ease-in-out infinite;
 }
 
-/* --- 4. Consolidated Button Styles (for both links) --- */
-.landlord a,
-.enter a {
-    display: inline-block; /* Behaves like a button */
-    padding: 12px 28px;
-    background-color: rgb(69, 104, 130);
-    color: white;
+/* Base styles for all buttons to keep them consistent (DRY) */
+.cta-button,
+.corner-link {
+    display: inline-block;
+    color: var(--text-light);
     text-decoration: none;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Responsive font size */
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, background-color 0.2s ease;
-    cursor: pointer;
+    font-weight: 700;
+    border-radius: 50px; /* Fully rounded for a modern "pill" shape */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid transparent;
 }
 
-.landlord a:hover,
-.enter a:hover {
-    background-color: rgb(85, 126, 158); /* A slightly lighter, more vibrant hover color */
-    transform: translateY(-3px) scale(1.03); /* Lifts the button up and slightly enlarges it */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+/* Specific styles for the main button */
+.cta-button {
+    padding: 15px 40px;
+    font-size: 1.25rem;
+    background-color: var(--text-light);
+    color: var(--dark-blue);
+}
+.cta-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-color);
 }
 
-/* --- 5. Positioning for the "Be a landlord" button --- */
-/* This container's only job is to position the link inside it */
-.landlord {
-    position: absolute;
-    top: clamp(15px, 3vw, 30px);
-    right: clamp(15px, 3vw, 30px);
+/* Specific styles for the corner button */
+.corner-link {
+    padding: 10px 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+}
+.corner-link:hover {
+    background-color: var(--text-light);
+    color: var(--dark-blue);
+    border-color: var(--text-light);
+}
+
+
+/* --- 4. Animations --- */
+
+/* Keyframes for the fade-in effect on page load */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Keyframes for the logo's subtle floating effect */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
 }

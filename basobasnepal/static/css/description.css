@@ -1,64 +1,139 @@
-/* --- Main Page Layout --- */
+/* --- 1. Global Setup & CSS Variables --- */
+:root {
+    --primary-bg: #f0f4f8;        /* Light, clean background */
+    --card-bg: #ffffff;           /* White for the main card */
+    --dark-blue: #1a3a53;         /* For headings and strong text */
+    --accent-color: #3498db;      /* Primary color for buttons */
+    --accent-hover: #2980b9;      /* Darker shade for hover */
+    --text-primary: #333333;      /* Main content text */
+    --text-secondary: #666666;    /* For secondary details */
+    --border-color: #e1e8ed;      /* Subtle border color */
+    --shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
+}
+
 body {
-    background-color: rgb(27, 60, 83); /* YOUR required background color */
-    color: rgb(210, 193, 182);      /* YOUR required font color */
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
     margin: 0;
-    padding: 20px;
+    padding: 30px 20px;
 }
 
-/* --- The Content Container --- */
-.description-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: rgb(37, 70, 95);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+/* --- 2. Page Header & Back Button --- */
+.page-header {
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+}
+.back-button {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+.back-button:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
 }
 
-/* --- Typography --- */
-.room-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-top: 0;
-    margin-bottom: 20px;
-    border-bottom: 2px solid rgb(69, 104, 130);
-    padding-bottom: 15px;
+/* --- 3. Main Layout Card & Grid --- */
+.listing-card {
+    background-color: var(--card-bg);
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden; /* Ensures content respects the border-radius */
 }
 
-.room-details p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 15px;
+.grid-container {
+    display: grid;
+    /* On large screens, split 5:6 ratio for image and text */
+    grid-template-columns: 5fr 6fr; 
 }
 
-.room-details p strong {
-    color: #ffffff;
-    margin-right: 8px;
+/* --- 4. Image & Info Panes --- */
+.image-pane {
+    background-color: #f5f5f5;
 }
-
-/* --- Room Photo Styling (FIXED) --- */
 .room-photo {
-    /* Prevents the image from being wider than its container */
-    max-width: 100%;
-    
-    /* Prevents the image from being taller than 75% of the screen's height */
-    max-height: 75vh; 
-
-    /* The rest ensures it scales correctly and is centered */
-    height: auto;
-    display: block;
-    margin: 30px auto 10px auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the pane without distortion */
+    display: block; /* Removes bottom space under image */
+}
+.no-photo-message {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 1.1rem;
+    min-height: 400px; /* Give it some height on mobile */
 }
 
-.no-photo-message {
-    text-align: center;
+.info-pane {
     padding: 40px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    font-style: italic;
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- 5. Content Styling within Info Pane --- */
+.listing-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+}
+
+.key-details {
+    background-color: #f9fafb;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+.key-details p {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+}
+.key-details p:last-child {
+    margin-bottom: 0;
+}
+.key-details strong {
+    color: var(--dark-blue);
+    font-weight: 600;
+}
+
+.description-section h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-blue);
+    margin: 0 0 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+.description-text {
+    line-height: 1.7;
+    color: var(--text-secondary);
+    flex-grow: 1; /* Pushes the CTA button to the bottom */
+}
+
+/* --- 6. Responsive Adjustments --- */
+@media (max-width: 900px) {
+    /* Stack to a single column on smaller screens */
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .info-pane {
+        padding: 30px;
+    }
+
+    .listing-title {
+        font-size: 1.8rem;
+    }
 }

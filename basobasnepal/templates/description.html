@@ -4,35 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Use the Django static tag to be safe -->
     <link rel="stylesheet" href="{% static 'css/description.css' %}">
-    <title>{{rooms.location_municipality}} Room Description</title>
+    <title>{{ rooms.location_municipality }} Room Description</title>
+    <!-- Add Google Font for a better look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="description-container">
-        
-        <!-- Use an H1 for the main page title -->
-        <h1 class="room-title">Room in {{rooms.location_municipality}}</h1>
-        
-        <div class="room-details">
-            <!-- Use <strong> for labels. It's better for screen readers and SEO -->
-            <p><strong>Address:</strong> {{rooms.location_municipality}}-{{rooms.location_ward_num}}, {{rooms.location_district}}</p>
-            <p><strong>Number of rooms:</strong> {{rooms.num_of_rooms_available}}</p>
-            
-            <!-- A separate section for the long description -->
-            <p><strong>About this space:</strong></p>
-            <p>{{rooms.description|linebreaks}}</p>
+    <header class="page-header">
+        <a href="{% url 'home' %}" class="back-button">← Back to Listings</a>
+    </header>
+
+    <main class="listing-card">
+        <div class="grid-container">
+
+            <!-- Column 1: Image -->
+            <div class="image-pane">
+                {% if rooms.photos.name %}
+                    <img class="room-photo" src="{{ rooms.photos.url }}" alt="Photo of the room in {{ rooms.location_municipality }}">
+                {% else %}
+                    <div class="no-photo-message">
+                        <span>No Photo Available</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Column 2: Information -->
+            <div class="info-pane">
+                <h1 class="listing-title">Room in {{ rooms.location_municipality }}</h1>
+                
+                <div class="key-details">
+                    <p><strong>Address:</strong> {{ rooms.location_municipality }}-{{ rooms.location_ward_num }}, {{ rooms.location_district }}</p>
+                    <p><strong>Rooms Available:</strong> {{ rooms.num_of_rooms_available }}</p>
+                </div>
+
+                <div class="description-section">
+                    <h2>About this space</h2>
+                    <div class="description-text">
+                        {{ rooms.description|linebreaks }}
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        {% if rooms.photos.name %}
-            <!-- Removed the fixed height/width attributes from the img tag -->
-            <img class="room-photo" src="{{ rooms.photos.url }}" alt="Photo of the room">
-        {%  else %}
-            <p class="no-photo-message">No Photo Available</p>
-        {% endif %}
-
-    </div>
+    </main>
 
 </body>
 </html>
