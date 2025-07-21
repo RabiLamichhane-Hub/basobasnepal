@@ -5,46 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <!-- Link to your external CSS file -->
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-    <!-- Optional: For a nicer font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="profile-card">
-        <div class="profile-header">
-            {% if picture_url %}
-                <img src="{{ picture_url }}" alt="Profile Picture" class="profile-picture">
-            {% else %}
-                <!-- A default placeholder image or icon can go here -->
-                <div class="profile-picture-placeholder">
-                    <span>{{ user.first_name|first }}{{ user.last_name|first }}</span>
-                </div>
-            {% endif %}
-            
-            <h2 class="user-name" title="Welcome, {{ user.first_name }} {{ user.last_name }}">Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
-            <p class="user-email">{{ user.email }}</p>
-        </div>
+    <header class="page-header">
+        <a class="navbar-logo" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.jpg' %}" alt="BasoBas Logo" class="navbar-logo-img">
+            <span>BasoBas Nepal</span>
+        </a>
+    </header>
 
-        <div class="profile-body">
-            <h3>Profile Details</h3>
-            <div class="details-grid">
-                <!-- Group first and last name into a single container -->
-                <div class="name-container">
-                <p><strong>First Name:</strong> {{ user.first_name }}</p>
-                <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <!-- This main container will center the profile card -->
+    <main class="profile-container">
+
+        <div class="profile-card">
+            <div class="profile-header">
+                {# Use a 'with' tag for cleaner access to the picture url #}
+                {% with picture_url=user.socialaccount_set.first.get_avatar_url %}
+                    {% if picture_url %}
+                        <img src="{{ picture_url }}" alt="Profile Picture" class="profile-picture">
+                    {% else %}
+                        <div class="profile-picture-placeholder">
+                            <span>{{ user.first_name|first }}{{ user.last_name|first }}</span>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
+                <p class="user-email">{{ user.email }}</p>
             </div>
-            <p><strong>Joined:</strong> {{ user.date_joined|date:"F Y" }}</p> <!-- Example detail -->
-            <p><strong>Status:</strong> <span class="status-active">Active</span></p>
+
+            <div class="profile-body">
+                <h3>Profile Details</h3>
+                <div class="details-grid">
+                    <p><strong>First Name:</strong> <span>{{ user.first_name }}</span></p>
+                    <p><strong>Last Name:</strong> <span>{{ user.last_name }}</span></p>
+                    <p><strong>Joined:</strong> <span>{{ user.date_joined|date:"F Y" }}</span></p>
+                    <p><strong>Status:</strong> <span class="status-active">Active</span></p>
+                </div>
+            </div>
+
+            <div class="profile-footer">
+                <a href="{% url 'account_logout' %}" class="logout-button">Logout</a>
+            </div>
         </div>
 
-        <div class="profile-footer">
-            <a href="{% url 'account_logout' %}" class="logout-button">Logout</a>
-        </div>
-    </div>
+    </main>
 
 </body>
 </html>
