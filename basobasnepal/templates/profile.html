@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Link to your external CSS file -->
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <!-- Optional: For a nicer font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="profile-card">
+        <div class="profile-header">
+            {% if picture_url %}
+                <img src="{{ picture_url }}" alt="Profile Picture" class="profile-picture">
+            {% else %}
+                <!-- A default placeholder image or icon can go here -->
+                <div class="profile-picture-placeholder">
+                    <span>{{ user.first_name|first }}{{ user.last_name|first }}</span>
+                </div>
+            {% endif %}
+            
+            <h2 class="user-name" title="Welcome, {{ user.first_name }} {{ user.last_name }}">Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="user-email">{{ user.email }}</p>
+        </div>
+
+        <div class="profile-body">
+            <h3>Profile Details</h3>
+            <div class="details-grid">
+                <!-- Group first and last name into a single container -->
+                <div class="name-container">
+                <p><strong>First Name:</strong> {{ user.first_name }}</p>
+                <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            </div>
+            <p><strong>Joined:</strong> {{ user.date_joined|date:"F Y" }}</p> <!-- Example detail -->
+            <p><strong>Status:</strong> <span class="status-active">Active</span></p>
+        </div>
+
+        <div class="profile-footer">
+            <a href="{% url 'account_logout' %}" class="logout-button">Logout</a>
+        </div>
+    </div>
+
+</body>
+</html>

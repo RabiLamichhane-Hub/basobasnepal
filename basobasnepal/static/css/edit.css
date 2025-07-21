@@ -1,0 +1,102 @@
+/* --- Basic Body and Font Setup --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: rgb(27, 60, 83);
+    color: rgb(220, 210, 200);
+    display: flex;
+    justify-content: center; /* Center the container horizontally */
+    align-items: center;   /* Center the container vertically */
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* --- Main Container for the Form --- */
+.maindiv {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Limit the max width for larger screens */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* This stacks the children vertically */
+}
+
+
+/* --- Heading Styling ("Update information") --- */
+.nonmaindiv1 {
+    text-align: center;
+    margin-bottom: 25px; /* Space between heading and form */
+}
+
+.nonmaindiv1 h1 {
+    color: #1c1e21;
+    /* This font-size is much larger than the form text, as requested */
+    font-size: 2.5em; /* em is relative to the parent font-size */
+    margin: 0; /* Remove default h1 margin */
+}
+
+
+/* --- Form Container and Elements --- */
+.nonmaindiv2 form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 
+  Django's 'as_p' renders each form field inside a <p> tag.
+  We can style these paragraphs to space out the fields.
+*/
+.nonmaindiv2 form p {
+    margin-bottom: 15px; /* Space between each form field */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style the labels (e.g., "Name", "Description") */
+.nonmaindiv2 label {
+    font-size: 1em; /* This is our base size for form text */
+    font-weight: 600;
+    margin-bottom: 8px; /* Space between label and input box */
+    color: #4b4f56;
+}
+
+/* Style all input fields, textareas, etc. */
+.nonmaindiv2 input,
+.nonmaindiv2 textarea,
+.nonmaindiv2 select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    font-size: 1em; /* Same base size as the label */
+    box-sizing: border-box; /* Important for padding and width to work together */
+}
+
+.nonmaindiv2 input:focus,
+.nonmaindiv2 textarea:focus,
+.nonmaindiv2 select:focus {
+    outline: none;
+    border-color: #1877f2; /* Highlight with a blue border on focus */
+    box-shadow: 0 0 0 2px #e7f3ff;
+}
+
+
+/* --- Submit Button Styling --- */
+.nonmaindiv2 button[type="submit"] {
+    background-color: #1877f2; /* A nice blue color */
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px; /* Add some space above the button */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.nonmaindiv2 button[type="submit"]:hover {
+    background-color: #166fe5; /* A slightly darker blue on hover */
+}

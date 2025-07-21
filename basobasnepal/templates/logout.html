@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Out</title>
+    <!-- Link to your external stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/logout.css' %}">
+</head>
+<body>
+    <div class="logout-box">
+        <h2>Are you sure you want to log out?</h2>
+
+        <div class="action-buttons">
+            <!-- YES: submit to logout (Danger Action) -->
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes</button>
+            </form>
+
+            <!-- NO: just go back to home (Safe Action) -->
+            <a href="{% url 'home' %}" class="btn btn-secondary">No</a>
+        </div>
+    </div>
+</body>
+</html>

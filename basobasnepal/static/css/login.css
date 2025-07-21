@@ -1,0 +1,77 @@
+/* --- Overall Page Layout --- */
+body {
+    height: 100%;
+    margin: 0;
+    background-color: rgb(27, 60, 83);
+    color: rgb(210, 193, 182);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* --- Fixed Navbar --- */
+.custom-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.navbar-logo {
+    color: rgb(210, 193, 182);
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.main-content-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 80px;
+    transform: translateY(-40px); /* ✅ Moves it 40px upward */
+}
+
+/* --- Google Login Button --- */
+.google-login-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+
+    background-color: #fff;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.google-login-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.google-login-button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .custom-navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

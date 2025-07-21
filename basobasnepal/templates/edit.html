@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/edit.css">
+    <title>Edit</title>
+</head>
+<body>
+    <div class="maindiv">
+        <div class="nonmaindiv1">
+            <h1>Update information</h1>
+        </div>
+        <div class="nonmaindiv2">
+            <form method="post">
+                {% csrf_token %}
+                {{room.as_p}}
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

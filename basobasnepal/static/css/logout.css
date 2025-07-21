@@ -1,0 +1,74 @@
+/* General Body and Page Layout */
+body {
+    background-color: rgb(27, 60, 83);
+    color: rgb(210, 193, 182);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* The main confirmation box */
+.logout-box {
+    background-color: rgb(37, 70, 95);
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.logout-box h2 {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* Container for the action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adds space between the buttons */
+}
+
+/* We need this to make the form a flex item without extra margin */
+.action-buttons form {
+    margin: 0;
+}
+
+/* Common styles for both buttons */
+.btn {
+    display: inline-block; /* Important for <a> tag to respect padding */
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+.btn:active {
+    transform: translateY(1px); /* Simple press effect */
+}
+
+/* "Yes" button - Danger styling */
+.btn-danger {
+    background-color: rgb(192, 57, 43); /* A muted, dangerous red */
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: rgb(169, 50, 38); /* A darker red on hover */
+}
+
+/* "No" button - Secondary/Safe styling */
+.btn-secondary {
+    background-color: rgb(69, 104, 130);
+    color: rgb(210, 193, 182);
+}
+
+.btn-secondary:hover {
+    background-color: rgb(90, 130, 160);
+}

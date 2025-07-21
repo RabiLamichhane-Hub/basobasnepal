@@ -1,0 +1,64 @@
+/* --- 1. Global & Body Setup --- */
+body {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(27, 60, 83);
+    position: relative; /* Needed for the absolutely positioned .landlord */
+    font-family: 'Poppins', sans-serif; /* A clean, modern font */
+    overflow: hidden; /* Prevents scrollbars from appearing */
+}
+
+/* --- 2. Main Content Wrapper --- */
+/* This new div centers the logo and button vertically */
+.main-content {
+    display: flex;
+    flex-direction: column; /* Stacks items top-to-bottom */
+    align-items: center;    /* Centers items horizontally */
+    gap: 25px;              /* Creates space between the logo and the button */
+}
+
+/* --- 3. Logo Styling --- */
+.logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Makes the logo circular */
+    object-fit: cover;  /* Prevents the image from stretching or squishing */
+    border: 4px solid rgb(69, 104, 130); /* Adds a nice border */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Gives it depth */
+}
+
+/* --- 4. Consolidated Button Styles (for both links) --- */
+.landlord a,
+.enter a {
+    display: inline-block; /* Behaves like a button */
+    padding: 12px 28px;
+    background-color: rgb(69, 104, 130);
+    color: white;
+    text-decoration: none;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Responsive font size */
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.landlord a:hover,
+.enter a:hover {
+    background-color: rgb(85, 126, 158); /* A slightly lighter, more vibrant hover color */
+    transform: translateY(-3px) scale(1.03); /* Lifts the button up and slightly enlarges it */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* --- 5. Positioning for the "Be a landlord" button --- */
+/* This container's only job is to position the link inside it */
+.landlord {
+    position: absolute;
+    top: clamp(15px, 3vw, 30px);
+    right: clamp(15px, 3vw, 30px);
+}

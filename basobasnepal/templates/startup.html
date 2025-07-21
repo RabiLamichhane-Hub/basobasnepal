@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BasoBas Nepal</title>
+    <!-- Make sure the path to your CSS file is correct -->
+    <link rel="stylesheet" href="/static/css/startup.css">
+    <!-- Optional: Add a link to a nice font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- This button stays in the corner -->
+    <div class="landlord">
+        <a href="{% url 'custom_login' %}">Be a landlord</a>
+    </div>
+
+    <!-- This new wrapper will hold and center the logo and the main button -->
+    <div class="main-content">
+        <!-- 1. LOGO ADDED HERE -->
+        <img src="{% static 'images/logo.jpg' %}" alt="BasoBas Nepal Logo" class="logo">
+        
+        <!-- The main call-to-action button -->
+        <div class="enter">
+            <a href="{% url 'home' %}">Get my home</a>
+        </div>
+    </div>
+
+</body>
+</html>

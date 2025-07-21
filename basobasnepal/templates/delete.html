@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/delete.css">
+    <title>Delete Confirmation</title>
+</head>
+<body>
+    <div class="confirmation-card">
+        <h1 class="card-title">
+            Are you sure you want to delete?
+        </h1>
+        
+        <form method="POST" class="button-group">
+            {% csrf_token %}
+            <button type="submit" name="response" value="yes" class="btn btn-danger">Yes</button>
+            <button type="submit" name="response" value="no" class="btn btn-secondary">No</button>
+        </form>
+    </div>
+</body>
+</html>

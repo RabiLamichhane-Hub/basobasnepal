@@ -1,0 +1,249 @@
+/* === YOUR ORIGINAL CSS (UNTOUCHED) === */
+body {
+    background-color: rgb(27, 60, 83);
+    color: rgb(210, 193, 182);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.info, .info2 {
+    padding: 0 10px;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.divv {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
+/* A utility class for screen readers, not essential for the layout but good practice */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* 1. The main card container */
+.card {
+    /* This is crucial for the stretched-link to work */
+    position: relative;
+
+    /* Your original styling from .box_link */
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #D2C1B6;
+    color: black;
+    border: 1px solid #381d1dbd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    margin-right: 30px;
+    display: flow-root;
+}
+
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+/* Add vertical line on the right side of every card except the last one */
+.card::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: -15px; /* Adjust this based on spacing between cards */
+    width: 1px;
+    height: calc(100% - 20px); /* Keeps line within card bounds */
+    background-color: #b9a99e; /* Same as your button_container border */
+}
+
+/* 2. The stretched link */
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1; /* Sits above the content but below the buttons */
+    content: "";
+}
+
+/* 3. The button container */
+.button_container {
+    /* These two properties are key */
+    position: relative; /* Establishes a new stacking context */
+    z-index: 2;         /* Lifts the buttons above the stretched link */
+
+    /* Optional: Add some styling for spacing */
+    margin-top: 10px;
+    text-align: right; /* Aligns buttons to the right */
+    padding-right: 15px; /* Add some padding so buttons aren't on the edge */
+    padding-bottom: 10px;
+}
+
+/* Your original button styling */
+.butt {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.btn-edit {
+    background-color: #3498db; /* Blue */
+}
+
+.btn-delete {
+    background-color: #e74c3c; /* Red */
+}
+
+/* Make sure your other elements are not breaking the layout */
+.card .inner {
+    padding: 15px;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.inner {
+    padding: 15px;
+    width: max-content;
+    height:fit-content;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper {
+    flex-grow: 1;
+    padding: 15px;
+}
+
+.inner img {
+    max-width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.button_container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid #b9a99e;
+}
+
+.butt {
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-edit {
+    background-color: rgb(69, 104, 130);
+}
+.btn-edit:hover {
+    background-color: rgb(85, 125, 153);
+}
+
+.btn-delete {
+    background-color: #c2692e;
+}
+.btn-delete:hover {
+    background-color: #d17a42;
+}
+
+
+/* === CORRECTED NAVBAR STYLES === */
+/* Delete the old .landlord rules and replace with this section */
+
+.custom-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.navbar-logo {
+    color: rgb(210, 193, 182);
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+/* 
+  THIS IS THE KEY FIX: Using YOUR original styles for the landlord button.
+*/
+.navbar-login-link,.navbar-landlord-link {
+    /* Copied from your original .landlord a */
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 16px;
+    background-color: rgb(69, 104, 130);
+    border-radius: 5px;
+    
+    /* Copied from your original .landlord container */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Using YOUR original hover effect */
+.navbar-landlord-link:hover {
+    background-color: #0f3568;
+    transform: translateY(-2px);
+}
+
+.navbar-login-link:hover {
+    background-color: #0f3568;
+    transform: translateY(-2px);
+}
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Adds a nice space between the buttons */
+}
+
+/* --- Your original media query --- */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .custom-navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

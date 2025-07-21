@@ -1,0 +1,20 @@
+{% load socialaccount %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting to Google...</title>
+</head>
+<body>
+    <form id="google-login-form" method="post" action="{% provider_login_url 'google' process='login' %}">
+        {% csrf_token %}
+        <noscript>
+            <p>JavaScript is required for this page. Click the button below if you are not redirected automatically.</p>
+            <button type="submit">Continue with Google</button>
+        </noscript>
+    </form>
+
+    <script>
+        document.getElementById('google-login-form').submit();
+    </script>
+</body>
+</html>

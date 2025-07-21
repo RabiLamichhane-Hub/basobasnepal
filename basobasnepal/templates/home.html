@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BasoBas Nepal</title>
+    <!-- We will use your custom CSS to style everything -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+
+    <nav class="custom-navbar" style="background-color: rgb(37, 70, 95);">
+        <a class="navbar-logo" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.jpg' %}" alt="BasoBas Logo" style="height: 32px; vertical-align: middle; margin-right: 8px;">
+            BasoBas Nepal
+        </a>
+        <!-- REPLACE the old navbar-right div with this one -->
+        <div class="navbar-right">
+    
+            <!-- New container for the login/profile section -->
+            <div class="navbar-item">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="profile-button" style="display: flex; align-items: center; text-decoration: none;">
+                        <img src="{{ user.socialaccount_set.first.get_avatar_url }}" alt="Profile Photo" style="height: 40px; width: 40px; border-radius: 50%; margin-right: 8px;">
+                            <!-- The span for the name was black, making it hard to see. Changed to white for better visibility. -->
+                    <span style="color: white; font-weight: bold;">{{ user.first_name }}</span>
+                    </a>
+                {% else %}
+                <!-- The 'Log in' link was unstyled. Now it uses the same class as the landlord button for consistency. -->
+                <a href="{% url 'custom_login' %}" class="navbar-login-link">Log in</a>
+                {% endif %}
+            </div>
+
+                <!-- The landlord button remains as its own item -->
+            <div class="navbar-item">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'landlord' %}" class="navbar-landlord-link">Be a landlord</a>
+                {% else %}
+                    <a href="{% url 'custom_login' %}?next={% url 'landlord' %}" class="navbar-landlord-link">Be a landlord</a>
+                {% endif %}
+            </div>
+
+</div>
+    </nav>
+
+    <!-- THE REST OF YOUR CODE IS 100% UNCHANGED -->
+    <div class="info">
+        <h1>Find your room/flat</h1>
+    </div>
+    <div class="info2">
+        <p>Rooms available</p>
+    </div>
+    <div class="container">
+        
+        <div class="divv">
+           {% for room in rooms %}
+                <!-- The card container is now a DIV -->
+                <div class="card">
+                <!-- This is the main link that will be stretched to cover the card -->
+                    <a href="{% url 'description' room.pk %}" class="stretched-link">
+                        <!-- Adding hidden text makes the link more accessible to screen readers -->
+                        <span class="visually-hidden">View details for room in {{room.location_municipality}}</span>
+                    </a>
+
+                    <div class="inner">
+                        <div class="content-wrapper">
+                            <p>Room Location: {{room.location_municipality}} {{room.location_ward_num}}, {{room.location_district}}</p>
+                            <p>Number of rooms available: {{room.num_of_rooms_available}}</p>
+                            {% if room.photos.name %}
+                                <img src="{{ room.photos.url }}" alt="Room Photo">
+                            {% else %}
+                                <p>No Photo Available</p>
+                            {% endif %}
+                        </div>
+
+                         <!-- This container holds the buttons and will be layered on top -->
+                        {% if request.user == room.owner %}
+                        <div class="button_container">
+                            <a href="{% url 'edit' room.pk %}" class="butt btn-edit">Edit</a>
+                            <a href="{% url 'delete' room.pk %}" class="butt btn-delete">Delete</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>    
+    </div>
+    
+</body>
+</html>

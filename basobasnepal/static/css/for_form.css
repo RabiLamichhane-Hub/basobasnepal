@@ -1,0 +1,108 @@
+/* --- Basic Body and Font Setup --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: rgb(27, 60, 83); /* Using the same background as your update page */
+    color: rgb(220, 210, 200);
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    align-items: center;   /* Center the form vertically */
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px 0; /* Add vertical padding for scrolling on long forms */
+    box-sizing: border-box;
+}
+
+/* --- Main Form Container --- */
+/* We apply the "card" styles directly to your form element */
+.for_form {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Limit the max width for larger screens */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* Stacks the form elements vertically */
+}
+
+/* --- Optional: If you add a heading inside the form --- */
+/*
+  If you add a title like <h1>Let for Rent</h1> inside your form,
+  you can uncomment this section to style it.
+*/
+/*
+.for_form h1 {
+    color: #1c1e21;
+    font-size: 2.5em;
+    text-align: center;
+    margin: 0 0 25px 0;
+}
+*/
+
+
+/* --- Form Field and Label Styling --- */
+
+/* 
+  Django's 'as_p' renders each form field inside a <p> tag.
+  We style these paragraphs to space out the fields.
+*/
+.for_form p {
+    margin-bottom: 15px; /* Space between each form field */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style the labels (e.g., "Name", "Description") */
+.for_form label {
+    font-size: 1em;
+    font-weight: 600;
+    margin-bottom: 8px; /* Space between label and input box */
+    color: #4b4f56; /* Dark grey for the labels */
+}
+
+/* Style all input fields, textareas, file inputs, etc. */
+.for_form input,
+.for_form textarea,
+.for_form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #1c1e21; /* Black text for input */
+    box-sizing: border-box; /* Important for padding and width to work together */
+}
+
+/* Style for when a user clicks/tabs into a form field */
+.for_form input:focus,
+.for_form textarea:focus,
+.for_form select:focus {
+    outline: none;
+    border-color: #1877f2; /* Highlight with a blue border on focus */
+    box-shadow: 0 0 0 2px #e7f3ff;
+}
+
+/* Django file inputs can be tricky, this helps make them look consistent */
+.for_form input[type="file"] {
+    padding: 8px; /* Adjust padding for file input */
+}
+
+
+/* --- Submit Button Styling --- */
+.for_form button[type="submit"] {
+    background-color: #1877f2; /* A nice blue color */
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px; /* Add some space above the button */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.for_form button[type="submit"]:hover {
+    background-color: #166fe5; /* A slightly darker blue on hover */
+}

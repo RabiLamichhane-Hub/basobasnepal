@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Use the Django static tag to be safe -->
+    <link rel="stylesheet" href="{% static 'css/description.css' %}">
+    <title>{{rooms.location_municipality}} Room Description</title>
+</head>
+<body>
+
+    <div class="description-container">
+        
+        <!-- Use an H1 for the main page title -->
+        <h1 class="room-title">Room in {{rooms.location_municipality}}</h1>
+        
+        <div class="room-details">
+            <!-- Use <strong> for labels. It's better for screen readers and SEO -->
+            <p><strong>Address:</strong> {{rooms.location_municipality}}-{{rooms.location_ward_num}}, {{rooms.location_district}}</p>
+            <p><strong>Number of rooms:</strong> {{rooms.num_of_rooms_available}}</p>
+            
+            <!-- A separate section for the long description -->
+            <p><strong>About this space:</strong></p>
+            <p>{{rooms.description|linebreaks}}</p>
+        </div>
+
+        {% if rooms.photos.name %}
+            <!-- Removed the fixed height/width attributes from the img tag -->
+            <img class="room-photo" src="{{ rooms.photos.url }}" alt="Photo of the room">
+        {%  else %}
+            <p class="no-photo-message">No Photo Available</p>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
