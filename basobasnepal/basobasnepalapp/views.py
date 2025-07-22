@@ -7,6 +7,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+from django.urls import reverse
 
 
 # Create your views here.
@@ -15,8 +16,9 @@ def startup(request):
     return render(request, 'startup.html')
 
 def home(request):
-    rooms = Room.objects.all()  # Shows latest rooms first
-    districts = Room.objects.values_list('district', flat=True).distinct()
+    rooms = Room.objects.all().order_by()
+    districts = District.objects.filter(id__in=Room.objects.values_list('district_id', flat=True).distinct())
+
     return render(request, 'home.html', {
         'rooms': rooms,
         'districts': districts,
@@ -24,26 +26,26 @@ def home(request):
     })
 
 def filter_rooms(request):
-    district = request.GET.get('district', None)
-
-    if district:
-        rooms = Room.objects.filter(district=district)
+    district_name = request.GET.get('district')
+    if district_name:
+        rooms = Room.objects.filter(district__name=district_name)
     else:
         rooms = Room.objects.all()
 
-    rooms_data = []
+    room_list = []
     for room in rooms:
-        rooms_data.append({
+        room_list.append({
             'pk': room.pk,
-            'location_municipality': room.municipality,
-            'location_ward_num': room.ward_num,
-            'location_district': room.district,
+            'municipality': room.municipality.name if room.municipality else '',
+            'ward_num': room.ward_num,
+            'district': room.district.name if room.district else '',
             'num_of_rooms_available': room.num_of_rooms_available,
             'photo_url': room.photos.url if room.photos else '',
             'is_owner': request.user == room.owner,
+            'detail_url': reverse('description', args=[room.pk]),
         })
 
-    return JsonResponse({'rooms': rooms_data})
+    return JsonResponse({'rooms': room_list})
 
 @login_required(login_url='custom_login')
 def landlord(request):
@@ -53,29 +55,27 @@ def landlord(request):
         form = RoomForm(request.POST, request.FILES)
         if form.is_valid():
             room = form.save(commit=False)
-            
-            # Assign foreign keys
+            # Assign foreign keys manually from POST data
             province_id = request.POST.get('province')
             district_id = request.POST.get('district')
             municipality_id = request.POST.get('municipality')
 
-            if province_id and district_id and municipality_id:
+            if province_id:
                 room.province = Province.objects.get(pk=province_id)
-                room.district = District.objects.get(pk=district_id)
-                room.municipality = Municipality.objects.get(pk=municipality_id)
-                room.owner = request.user
-                room.save()
-                return redirect('home')  # ✅ success!
-        else:
-            print(form.errors)  # 🔍 see validation issues in console
+                if district_id:
+                    room.district = District.objects.get(pk=district_id)
+                    if municipality_id:
+                        room.municipality = Municipality.objects.get(pk=municipality_id)
 
+                        room.owner = request.user
+                        room.save()
+                        return redirect('home')
     else:
         form = RoomForm()
 
-    return render(request, 'landlord.html', {
-        'form': form,
-        'provinces': provinces
-    })
+    provinces = Province.objects.all()
+    return render(request, 'landlord.html', {'form': form, 'provinces': provinces})
+
 
 def description(request, pk):
     rooms = get_object_or_404(Room, pk= pk)

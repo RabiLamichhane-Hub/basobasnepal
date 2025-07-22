@@ -51,6 +51,7 @@
             <option value="">-- All Districts --</option>
             {% for district in districts %}
                 <option value="{{ district }}">{{ district }}</option>
+
             {% endfor %}
         </select>
     </div>
@@ -89,9 +90,9 @@
 <script>
     // Pass Django URLs to JavaScript safely
     const URL_CONFIG = {
-        description: "{% url 'description' 0 %}".replace('0', ''),
-        edit: "{% url 'edit' 0 %}".replace('0', ''),
-        delete: "{% url 'delete' 0 %}".replace('0', '')
+        description: "/basobasnepal/description",
+        edit: "/basobasnepal/edit",
+        delete: "/basobasnepal/delete"
     };
 
     $(document).ready(function(){
@@ -122,7 +123,7 @@
                         data.rooms.forEach(function(room){
                             roomsHtml += `
                                 <div class="card">
-                                    <a href="${URL_CONFIG.description}${room.pk}/" class="stretched-link">
+                                    <a href="${URL_CONFIG.description}/${room.pk}/" class="stretched-link">
                                         <span class="visually-hidden">View details for room in ${room.municipality}</span>
                                     </a>
                                     
@@ -135,8 +136,8 @@
                                     
                                     ${room.is_owner ? `
                                     <div class="card-footer">
-                                        <a href="${URL_CONFIG.edit}${room.pk}/" class="butt btn-edit">Edit</a>
-                                        <a href="${URL_CONFIG.delete}${room.pk}/" class="butt btn-delete">Delete</a>
+                                        <a href="${URL_CONFIG.edit}/${room.pk}/" class="butt btn-edit">Edit</a>
+                                        <a href="${URL_CONFIG.delete}/${room.pk}/" class="butt btn-delete">Delete</a>
                                     </div>
                                     ` : ''}
                                 </div>
