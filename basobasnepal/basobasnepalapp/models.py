@@ -30,16 +30,15 @@ class Municipality(models.Model):
 # Create your models here.
 class Room(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    province = models.CharField(max_length=15)
-    district = models.CharField(max_length=15, null=False)
-    municipality = models.CharField(max_length=20, null=False)
+    province = models.ForeignKey(Province, on_delete=models.SET_NULL, null=True)
+    district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
+    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
     ward_num = models.IntegerField()
     street = models.CharField(max_length=50, null=True)
     num_of_rooms_available = models.IntegerField()
-    contact_number = models.IntegerField()
+    contact_number = models.BigIntegerField()
     description = models.CharField(max_length=200)
-    
     photos = models.ImageField(upload_to='room_photos/')
 
     def __str__(self):
-        return (self.municipality)
+        return f"{self.municipality.name},{self.ward_num}"

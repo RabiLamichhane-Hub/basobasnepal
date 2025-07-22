@@ -2,24 +2,146 @@
 <html lang="en">
 <head>
     {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/edit.css">
-    <title>Edit</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Property Listing</title>
+    <!-- We can reuse the same CSS file! -->
+    <link rel="stylesheet" href="{% static 'css/for_form.css' %}" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div class="maindiv">
-        <div class="nonmaindiv1">
-            <h1>Update information</h1>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Edit Your Property Listing</h1>
+            <p>Update the details below and save your changes.</p>
         </div>
-        <div class="nonmaindiv2">
-            <form method="post">
-                {% csrf_token %}
-                {{room.as_p}}
-                <button type="submit">Update</button>
-            </form>
-        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <fieldset>
+                <legend>Location Details</legend>
+                <div class="form-group">
+                    <label for="{{ form.province.id_for_label }}">Province</label>
+                    {{ form.province }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.district.id_for_label }}">District</label>
+                    {{ form.district }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.municipality.id_for_label }}">Municipality / VDC</label>
+                    {{ form.municipality }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.ward_num.id_for_label }}">Ward Number</label>
+                    {{ form.ward_num }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.street.id_for_label }}">Street or Tole</label>
+                    {{ form.street }}
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Property & Contact Details</legend>
+                <div class="form-group">
+                    <label for="{{ form.num_of_rooms_available.id_for_label }}">Number of Rooms Available</label>
+                    {{ form.num_of_rooms_available }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.contact_number.id_for_label }}">Contact Number</label>
+                    {{ form.contact_number }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Description</label>
+                    {{ form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.photos.id_for_label }}">Upload New or Replace Photos</label>
+                    {{ form.photos }}
+                    <!-- Optional: Display current photos -->
+                    {% if room.photos %}
+                        <p class="current-photo-info">Current photo: <a href="{{ room.photos.url }}" target="_blank">{{ room.photos.name|truncatechars:30 }}</a></p>
+                    {% endif %}
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">Update Listing</button>
+            </div>
+        </form>
     </div>
-    
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const provinceSelect = document.querySelector('#id_province');
+        const districtSelect = document.querySelector('#id_district');
+        const municipalitySelect = document.querySelector('#id_municipality');
+
+        // Data passed from the Django view
+        const allDistricts = JSON.parse('{{ districts_json|escapejs }}');
+        const allMunicipalities = JSON.parse('{{ municipalities_json|escapejs }}');
+
+        // The IDs of the currently saved location for this room
+        const initialDistrictId = '{{ room.district.id|default_if_none:"" }}';
+        const initialMunicipalityId = '{{ room.municipality.id|default_if_none:"" }}';
+
+        function updateDistrictOptions() {
+            const selectedProvinceId = provinceSelect.value;
+            // Clear current options
+            districtSelect.innerHTML = '<option value="">---------</option>';
+            municipalitySelect.innerHTML = '<option value="">Select a district first</option>';
+
+            if (!selectedProvinceId) return;
+
+            // Filter and add new options
+            const filteredDistricts = allDistricts.filter(d => d.province_id == selectedProvinceId);
+            filteredDistricts.forEach(district => {
+                const option = new Option(district.name, district.id);
+                // If this district is the one saved in the database, select it
+                if (district.id == initialDistrictId) {
+                    option.selected = true;
+                }
+                districtSelect.appendChild(option);
+            });
+            
+            // Trigger an update on the municipality dropdown as well
+            updateMunicipalityOptions();
+        }
+
+        function updateMunicipalityOptions() {
+            const selectedDistrictId = districtSelect.value;
+            // Clear current options
+            municipalitySelect.innerHTML = '<option value="">---------</option>';
+
+            if (!selectedDistrictId) return;
+
+            // Filter and add new options
+            const filteredMunicipalities = allMunicipalities.filter(m => m.district_id == selectedDistrictId);
+            filteredMunicipalities.forEach(municipality => {
+                const option = new Option(municipality.name, municipality.id);
+                // If this municipality is the one saved in the database, select it
+                if (municipality.id == initialMunicipalityId) {
+                    option.selected = true;
+                }
+                municipalitySelect.appendChild(option);
+            });
+        }
+
+        // Add event listeners
+        provinceSelect.addEventListener('change', updateDistrictOptions);
+        districtSelect.addEventListener('change', updateMunicipalityOptions);
+
+        // --- Initial Population on Page Load ---
+        // This is crucial for an edit form. We need to populate the dropdowns
+        // with the correct, filtered options based on the instance data.
+        updateDistrictOptions();
+    });
+    </script>
 </body>
 </html>

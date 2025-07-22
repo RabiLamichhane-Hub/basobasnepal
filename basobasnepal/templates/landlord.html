@@ -5,103 +5,112 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>List Your Property for Rent</title>
-    <!-- Link to your new CSS file -->
+
     <link rel="stylesheet" href="{% static 'css/for_form.css' %}" />
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-
-    <div class="form-container">
-        <div class="form-header">
-            <h1>List Your Property for Rent</h1>
-            <p>Fill in the details below to find your next tenant.</p>
-        </div>
-
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <fieldset>
-                <legend>Location Details</legend>
-                <!-- Province -->
-                <div class="form-group">
-                    <label for="id_province">Province</label>
-                    <select id="id_province" name="province">
-                        <option value="" selected>Select a Province</option>
-                        {% for province in provinces %}
-                            <option value="{{ province.id }}">{{ province.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <!-- District -->
-                <div class="form-group">
-                    <label for="id_district">District</label>
-                    <select id="id_district" name="district" disabled>
-                        <option value="">Select a province first</option>
-                    </select>
-                </div>
-
-                <!-- Municipality -->
-                <div class="form-group">
-                    <label for="id_municipality">Municipality / VDC</label>
-                    <select id="id_municipality" name="municipality" disabled>
-                        <option value="">Select a district first</option>
-                    </select>
-                </div>
-
-                <!-- Ward Number -->
-                <div class="form-group">
-                    <label for="{{ form.ward_num.id_for_label }}">Ward Number</label>
-                    {{ form.ward_num }}
-                </div>
-
--
-                <!-- Street -->
-                <div class="form-group">
-                    <label for="{{ form.street.id_for_label }}">Street or Tole</label>
-                    {{ form.street }}
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Property & Contact Details</legend>
-                <!-- Number of Rooms -->
-                <div class="form-group">
-                    <label for="{{ form.num_of_rooms_available.id_for_label }}">Number of Rooms Available</label>
-                    {{ form.num_of_rooms_available }}
-                </div>
-
-                <!-- Contact Number -->
-                <div class="form-group">
-                    <label for="{{ form.contact_number.id_for_label }}">Contact Number</label>
-                    {{ form.contact_number }}
-                </div>
-
-                <!-- Description -->
-                <div class="form-group">
-                    <label for="{{ form.description.id_for_label }}">Description</label>
-                    {{ form.description }}
-                </div>
-
-                <!-- Photos -->
-                <div class="form-group">
-                    <label for="{{ form.photos.id_for_label }}">Upload Property Photos</label>
-                    {{ form.photos }}
-                </div>
-            </fieldset>
-
-            <div class="form-actions">
-                <button type="submit" class="submit-btn">List My Property</button>
-            </div>
-        </form>
+<div class="form-container">
+    <div class="form-header">
+        <h1>List Your Property for Rent</h1>
+        <p>Fill in the details below to find your next tenant.</p>
     </div>
 
-    <!-- Your JS remains unchanged, it is perfectly functional -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="error">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <fieldset>
+            <legend>Location Details</legend>
+
+            <!-- Province -->
+            <div class="form-group">
+                <label for="id_province">Province</label>
+                <select id="id_province" name="province">
+                    <option value="" selected>Select a Province</option>
+                    {% for province in provinces %}
+                        <option value="{{ province.id }}">{{ province.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- District -->
+            <div class="form-group">
+                <label for="id_district">District</label>
+                <select id="id_district" name="district" disabled>
+                    <option value="">Select a province first</option>
+                </select>
+            </div>
+
+            <!-- Municipality -->
+            <div class="form-group">
+                <label for="id_municipality">Municipality / VDC</label>
+                <select id="id_municipality" name="municipality" disabled>
+                    <option value="">Select a district first</option>
+                </select>
+            </div>
+
+            <!-- Ward Number -->
+            <div class="form-group">
+                <label for="{{ form.ward_num.id_for_label }}">Ward Number</label>
+                {{ form.ward_num }}
+                {{ form.ward_num.errors }}
+            </div>
+
+            <!-- Street -->
+            <div class="form-group">
+                <label for="{{ form.street.id_for_label }}">Street or Tole</label>
+                {{ form.street }}
+                {{ form.street.errors }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Property & Contact Details</legend>
+
+            <!-- Number of Rooms -->
+            <div class="form-group">
+                <label for="{{ form.num_of_rooms_available.id_for_label }}">Number of Rooms Available</label>
+                {{ form.num_of_rooms_available }}
+                {{ form.num_of_rooms_available.errors }}
+            </div>
+
+            <!-- Contact Number -->
+            <div class="form-group">
+                <label for="{{ form.contact_number.id_for_label }}">Contact Number</label>
+                {{ form.contact_number }}
+                {{ form.contact_number.errors }}
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+
+            <!-- Photos -->
+            <div class="form-group">
+                <label for="{{ form.photos.id_for_label }}">Upload Property Photos</label>
+                {{ form.photos }}
+                {{ form.photos.errors }}
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">List My Property</button>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function () {
         $("#id_province").change(function () {
             var url = "{% url 'ajax_load_districts' %}";
             var provinceId = $(this).val();
@@ -119,7 +128,7 @@
                 url: url,
                 data: { 'province_id': provinceId },
                 success: function (data) {
-                    districtSelect.html('<option value="" selected>Select a District</option>');
+                    districtSelect.html('<option value="">Select a District</option>');
                     $.each(data, function (key, value) {
                         districtSelect.append('<option value="' + value.id + '">' + value.name + '</option>');
                     });
@@ -132,7 +141,6 @@
         $("#id_district").change(function () {
             var url = "{% url 'ajax_load_municipalities' %}";
             var districtId = $(this).val();
-
             var municipalitySelect = $("#id_municipality");
 
             if (!districtId) {
@@ -144,7 +152,7 @@
                 url: url,
                 data: { 'district_id': districtId },
                 success: function (data) {
-                    municipalitySelect.html('<option value="" selected>Select a Municipality/VDC</option>');
+                    municipalitySelect.html('<option value="">Select a Municipality/VDC</option>');
                     $.each(data, function (key, value) {
                         municipalitySelect.append('<option value="' + value.id + '">' + value.name + '</option>');
                     });
@@ -152,7 +160,7 @@
                 }
             });
         });
-    </script>
-
+    });
+</script>
 </body>
 </html>

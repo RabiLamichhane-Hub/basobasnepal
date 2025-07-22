@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Room, Province, Municipality, District
-from .forms import RoomForm, LocationFilterForm
+from .forms import RoomForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from allauth.socialaccount.models import SocialAccount
 from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+
 
 # Create your views here.
 
@@ -50,26 +53,29 @@ def landlord(request):
         form = RoomForm(request.POST, request.FILES)
         if form.is_valid():
             room = form.save(commit=False)
-            # Assign foreign keys manually from POST data
+            
+            # Assign foreign keys
             province_id = request.POST.get('province')
             district_id = request.POST.get('district')
             municipality_id = request.POST.get('municipality')
 
-            if province_id:
+            if province_id and district_id and municipality_id:
                 room.province = Province.objects.get(pk=province_id)
-            if district_id:
                 room.district = District.objects.get(pk=district_id)
-            if municipality_id:
                 room.municipality = Municipality.objects.get(pk=municipality_id)
+                room.owner = request.user
+                room.save()
+                return redirect('home')  # ✅ success!
+        else:
+            print(form.errors)  # 🔍 see validation issues in console
 
-            room.owner = request.user
-            room.save()
-            return redirect('home')
     else:
         form = RoomForm()
 
-    return render(request, 'landlord.html', {'form': form, 'provinces': provinces})
-
+    return render(request, 'landlord.html', {
+        'form': form,
+        'provinces': provinces
+    })
 
 def description(request, pk):
     rooms = get_object_or_404(Room, pk= pk)
@@ -88,14 +94,29 @@ def delete(request, pk):
             return redirect('home')
     return render(request, 'delete.html', {'room':room})
 
-@login_required
 def edit(request, pk):
-    room_instance = get_object_or_404(Room, pk=pk)
-    room = RoomForm(request.POST or None, instance = room_instance)
-    if room.is_valid():
-        room.save()
-        return redirect('home')
-    return render(request, 'edit.html', {'room': room})
+    room = get_object_or_404(Room, pk=pk)
+
+    if request.method == 'POST':
+        form = RoomForm(request.POST, request.FILES, instance=room)
+        if form.is_valid():
+            form.save()
+            return redirect('home') # Or wherever you want to redirect after success
+    else:
+        form = RoomForm(instance=room)
+
+    # Fetch all possible options for the client-side filtering
+    districts = list(District.objects.values('id', 'name', 'province_id'))
+    municipalities = list(Municipality.objects.values('id', 'name', 'district_id'))
+
+    context = {
+        'form': form,
+        'room': room, # Pass the whole room object for easy access
+        'districts_json': json.dumps(districts),
+        'municipalities_json': json.dumps(municipalities),
+    }
+    return render(request, 'edit.html', context)
+
 
 def custom_login(request):
     return render(request, 'login.html')
