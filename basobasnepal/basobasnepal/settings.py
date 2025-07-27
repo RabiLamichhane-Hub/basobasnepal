@@ -85,10 +85,15 @@ WSGI_APPLICATION = 'basobasnepal.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'basobasdb',
+        'USER': 'postgres',
+        'PASSWORD': 'rabidada',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
@@ -152,6 +157,11 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/basobasnepal/home/'
 # Tell allauth which scopes you want from Google
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': '702577533942-io8s3rk7t9al4hfj3kfk05peks34v70m.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
         'SCOPE': [
             'openid',
             'email',

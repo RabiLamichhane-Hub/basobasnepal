@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 class Province(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
-
     def __str__(self):
         return self.name
 
@@ -33,9 +32,9 @@ class Room(models.Model):
     province = models.ForeignKey(Province, on_delete=models.SET_NULL, null=True)
     district = models.ForeignKey(District, on_delete=models.SET_NULL, null=True)
     municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
-    ward_num = models.IntegerField()
+    ward_num = models.BigIntegerField()
     street = models.CharField(max_length=50, null=True)
-    num_of_rooms_available = models.IntegerField()
+    num_of_rooms_available = models.BigIntegerField()
     contact_number = models.BigIntegerField()
     description = models.CharField(max_length=200)
     photos = models.ImageField(upload_to='room_photos/')
