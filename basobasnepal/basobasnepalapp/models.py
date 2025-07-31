@@ -38,6 +38,7 @@ class Room(models.Model):
     contact_number = models.BigIntegerField()
     description = models.CharField(max_length=200)
     photos = models.ImageField(upload_to='room_photos/')
+    approve = models.BooleanField(default= False)
 
     def __str__(self):
         return f"{self.municipality.name},{self.ward_num}"

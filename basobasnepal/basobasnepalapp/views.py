@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from allauth.socialaccount.models import SocialAccount
 from django.http import JsonResponse
-from django.core.serializers.json import DjangoJSONEncoder
 import json
 from django.urls import reverse
 
@@ -16,8 +15,8 @@ def startup(request):
     return render(request, 'startup.html')
 
 def home(request):
-    rooms = Room.objects.all().order_by()
-    districts = District.objects.filter(id__in=Room.objects.values_list('district_id', flat=True).distinct())
+    rooms = Room.objects.filter(approve=True).order_by()
+    districts = District.objects.filter(id__in=Room.objects.filter(approve=True).values_list('district_id', flat=True).distinct())
 
     return render(request, 'home.html', {
         'rooms': rooms,
@@ -28,9 +27,9 @@ def home(request):
 def filter_rooms(request):
     district_name = request.GET.get('district')
     if district_name:
-        rooms = Room.objects.filter(district__name=district_name)
+        rooms = Room.objects.filter(district__name=district_name, approve=True)
     else:
-        rooms = Room.objects.all()
+        rooms = Room.objects.filter(approve=True)
 
     room_list = []
     for room in rooms:
