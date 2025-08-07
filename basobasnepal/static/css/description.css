@@ -108,6 +108,11 @@ body {
     font-weight: 600;
 }
 
+.description-section {
+    flex-grow: 1; /* MODIFIED: Makes this section grow to push button down */
+    display: flex; /* ADDED: To allow child to have full height */
+    flex-direction: column; /* ADDED: To allow child to have full height */
+}
 .description-section h2 {
     font-size: 1.2rem;
     font-weight: 600;
@@ -119,7 +124,7 @@ body {
 .description-text {
     line-height: 1.7;
     color: var(--text-secondary);
-    flex-grow: 1; /* Pushes the CTA button to the bottom */
+    /* flex-grow: 1; <-- This property was moved to .description-section */
 }
 
 /* --- 6. Responsive Adjustments --- */
@@ -136,4 +141,29 @@ body {
     .listing-title {
         font-size: 1.8rem;
     }
+}
+
+/* --- 7. Call to Action (CTA) Button --- NEW SECTION --- */
+.cta-button {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin-top: 20px; /* Provides space between description and button */
+    background-color: var(--accent-color);
+    color: var(--card-bg);
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box; /* Ensures padding is included in the full width */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.cta-button:hover, .cta-button:focus {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px); /* Adds a subtle lift effect */
+    outline: none;
 }

@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/description.css' %}">
+    <link rel="stylesheet" href="{% static 'css/booking.css' %}">
+    <title>Book Room - {{ room.municipality }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="page-header">
+    <a href="{% url 'description' room.pk %}" class="back-button">← Back to Room Details</a>
+</header>
+
+<main>
+    <div class="form-card">
+        <div class="form-header">
+            <h1 class="form-title">Booking Request</h1>
+            <p class="form-subtitle">For room in {{ room.municipality }}-{{ room.ward_num }}, {{ room.district }}</p>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="error-summary">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- RENDER ALL FORM FIELDS -->
+
+            <!-- Added Name Field -->
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}<div class="error-list">{{ form.name.errors }}</div>{% endif %}
+            </div>
+
+            <!-- Added Contact Field -->
+            <div class="form-group">
+                {{ form.contact.label_tag }}
+                {{ form.contact }}
+                {% if form.contact.errors %}<div class="error-list">{{ form.contact.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.adults.label_tag }}
+                {{ form.adults }}
+                {% if form.adults.errors %}<div class="error-list">{{ form.adults.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.children.label_tag }}
+                {{ form.children }}
+                {% if form.children.errors %}<div class="error-list">{{ form.children.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.parmanent_address.label_tag }}
+                {{ form.parmanent_address }}
+                {% if form.parmanent_address.errors %}<div class="error-list">{{ form.parmanent_address.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.occupation.label_tag }}
+                {{ form.occupation }}
+                {% if form.occupation.errors %}<div class="error-list">{{ form.occupation.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.additional_info.label_tag }}
+                {{ form.additional_info }}
+                <small class="field-help">Any other information you'd like to provide (optional).</small>
+                {% if form.additional_info.errors %}<div class="error-list">{{ form.additional_info.errors }}</div>{% endif %}
+            </div>
+            
+            <button type="submit" class="submit-button">Submit Booking Request</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

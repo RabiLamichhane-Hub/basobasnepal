@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Province, District, Municipality, Room
+from .models import Province, District, Municipality, Room, Booking
 from django.utils.html import format_html
 
 @admin.register(Province)
@@ -26,7 +26,7 @@ class MunicipalityAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('id', 'owner', 'colored_approve', 'province', 'district', 'municipality', 'ward_num', 'num_of_rooms_available', 'contact_number')
     list_filter = ('province', 'district', 'municipality')
-    search_fields = ('owner__username', 'description', 'street')
+    search_fields = ('owner__username', 'district')
     raw_id_fields = ('owner',)
     ordering = ('approve',)
 
@@ -36,3 +36,19 @@ class RoomAdmin(admin.ModelAdmin):
         else:
             return format_html('<span style="color: red; font-weight: bold;">Unapproved</span>')
     colored_approve.short_description = 'Approval Status'
+
+@admin.register(Booking)
+class Booking(admin.ModelAdmin):
+    list_display = ('room', 'user','name', 'contact', 'adults', 'children', 'occupation', 'acceptance', 'availability')
+
+    def acceptance(self, obj):
+        if obj.accepted:
+            return format_html('<span style="color: green; fomt_weighted: bold;">Accepted</span>')
+        else:
+            return format_html('<span style="color: red; fomt_weighted: bold;">Not Accepted yet</span>')
+        
+    def availability(self, obj):
+        if obj.cancelled:
+            return format_html('<span style="color: red; fomt_weighted: bold;">Not Available now</span>')
+        else:
+            return format_html('<span style="color: green; fomt_weighted: bold;">Available</span>')

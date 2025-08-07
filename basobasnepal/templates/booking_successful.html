@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed!</title>
+    <!-- Link to the new CSS file -->
+    <link rel="stylesheet" href="{% static 'css/success.css' %}">
+    <!-- Reusing the same font for consistency -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main>
+        <div class="success-card">
+            <div class="success-icon">
+                <!-- A clean, inline SVG for the checkmark -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="check-circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+
+            <h1 class="success-title">Booking Request Sent!</h1>
+            
+            <p class="success-subtitle">
+                Thank you, <strong>{{ booking.name }}</strong>. Your booking request has been successfully received.
+            </p>
+            
+            <p class="next-steps">
+                We will review your request and contact you shortly at <strong>{{ booking.contact }}</strong> to confirm the booking.
+            </p>
+
+            <div class="booking-summary">
+                <h2 class="summary-title">Booking Summary</h2>
+                <dl class="details-list">
+                    <dt>Booking ID:</dt>
+                    <dd>{{ booking.pk }}</dd>
+
+                    <dt>Room Location:</dt>
+                    <dd>{{ room.municipality }}-{{ room.ward_num }}, {{ room.district }}</dd>
+
+                    <dt>Guests:</dt>
+                    <dd>{{ booking.adults }} Adult(s), {{ booking.children }} Child(ren)</dd>
+                    
+                    <dt>Permanent Address:</dt>
+                    <dd>{{ booking.parmanent_address }}</dd>
+                    
+                    <dt>Occupation:</dt>
+                    <dd>{{ booking.occupation }}</dd>
+                </dl>
+            </div>
+
+            <!-- This link should point to your homepage URL -->
+            <a href="{% url 'home' %}" class="home-button">Back to Homepage</a>
+        </div>
+    </main>
+
+</body>
+</html>
