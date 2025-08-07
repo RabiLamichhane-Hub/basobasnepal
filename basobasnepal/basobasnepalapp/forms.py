@@ -37,11 +37,11 @@ class RoomForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['name', 'contact', 'adults', 'children', 'parmanent_address', 'occupation', 'additional_info']
+        fields = ['applicant_name', 'contact', 'adults', 'children', 'parmanent_address', 'occupation', 'additional_info']
 
         # Add this 'labels' dictionary to customize the text for each field
         labels = {
-            'name': 'Your Full Name',
+            'applicant_name': 'Your Full Name',
             'contact': 'Contact Number',
             'adults': 'Number of Adults',
             'children': 'Number of Children',
@@ -52,7 +52,7 @@ class BookingForm(forms.ModelForm):
 
         # BONUS: You can also add placeholders and other HTML attributes using widgets
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'e.g., Jane Doe'}),
+            'applicant_name': forms.TextInput(attrs={'placeholder': 'e.g., Jane Doe'}),
             'contact': forms.TextInput(attrs={'placeholder': 'e.g., 98xxxxxxxx'}),
             'parmanent_address': forms.TextInput(attrs={'placeholder': 'City, Street, House No.'}),
             'occupation': forms.TextInput(attrs={'placeholder': 'e.g., Student, Engineer'}),

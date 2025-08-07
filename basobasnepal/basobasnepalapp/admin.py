@@ -38,8 +38,8 @@ class RoomAdmin(admin.ModelAdmin):
     colored_approve.short_description = 'Approval Status'
 
 @admin.register(Booking)
-class Booking(admin.ModelAdmin):
-    list_display = ('room', 'user','name', 'contact', 'adults', 'children', 'occupation', 'acceptance', 'availability')
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ('room', 'owner','applicant_name', 'contact', 'adults', 'children', 'occupation', 'acceptance', 'availability')
 
     def acceptance(self, obj):
         if obj.accepted:
@@ -52,3 +52,6 @@ class Booking(admin.ModelAdmin):
             return format_html('<span style="color: red; fomt_weighted: bold;">Not Available now</span>')
         else:
             return format_html('<span style="color: green; fomt_weighted: bold;">Available</span>')
+        
+    def owner(self, obj):
+        return obj.user.username

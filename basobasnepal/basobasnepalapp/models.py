@@ -48,7 +48,7 @@ class Booking(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    name = models.CharField(null=False)
+    applicant_name = models.CharField(null=False)
     contact = models.PositiveBigIntegerField(null=False)
     adults = models.PositiveIntegerField(null=False)
     children = models.PositiveIntegerField(default=0)
