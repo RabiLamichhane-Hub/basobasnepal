@@ -54,4 +54,8 @@ class BookingAdmin(admin.ModelAdmin):
             return format_html('<span style="color: green; fomt_weighted: bold;">Available</span>')
         
     def owner(self, obj):
-        return obj.user.username
+        user = obj.room.owner
+        if user.first_name or user.last_name:
+            return f"{user.first_name} {user.last_name}".strip()
+        return user.username
+    owner.short_description = 'Room Owner'
