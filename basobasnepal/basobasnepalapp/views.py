@@ -15,10 +15,31 @@ def startup(request):
     return render(request, 'startup.html')
 
 def home(request):
-    rooms = Room.objects.filter(approve=True).order_by()
-    districts = District.objects.filter(id__in=Room.objects.filter(approve=True).values_list('district_id', flat=True).distinct())
+    if request.user.is_authenticated:
+        rooms = Room.objects.filter(approve=True).exclude(owner=request.user)
+    else:
+        rooms = Room.objects.filter(approve=True)
+
+    districts = District.objects.filter(
+        id__in=rooms.values_list('district_id', flat=True).distinct()
+    )
 
     return render(request, 'home.html', {
+        'rooms': rooms,
+        'districts': districts,
+        'user': request.user
+    })
+
+@login_required
+def your_rooms(request):
+    if request.user.is_authenticated:
+        rooms = Room.objects.filter(owner=request.user)
+
+    districts = District.objects.filter(
+        id__in=rooms.values_list('district_id', flat=True).distinct()
+    )
+
+    return render(request, 'your_room.html', {
         'rooms': rooms,
         'districts': districts,
         'user': request.user
