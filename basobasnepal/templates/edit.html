@@ -64,10 +64,7 @@
                 <div class="form-group">
                     <label for="{{ form.photos.id_for_label }}">Upload New or Replace Photos</label>
                     {{ form.photos }}
-                    <!-- Optional: Display current photos -->
-                    {% if room.photos %}
-                        <p class="current-photo-info">Current photo: <a href="{{ room.photos.url }}" target="_blank">{{ room.photos.name|truncatechars:30 }}</a></p>
-                    {% endif %}
+                    
                 </div>
             </fieldset>
 

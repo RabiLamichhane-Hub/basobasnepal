@@ -1,29 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to BasoBas Nepal</title>
+    
     <link rel="stylesheet" href="{% static 'css/startup.css' %}">
+    
+    <!-- Using a slightly different weight for the sub-headline -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Link in the corner for landlords -->
     <div class="corner-link-container">
         <a href="{% url 'custom_login' %}?next={% url 'landlord' %}" class="corner-link">Be a landlord</a>
     </div>
 
-    <!-- Main content container that will fade in -->
     <div class="main-content">
         <img src="{% static 'images/logo.jpg' %}" alt="BasoBas Nepal Logo" class="logo">
         
-        <!-- The main call-to-action button, no extra div needed -->
-        <a href="{% url 'home' %}" class="cta-button">Get My Home</a>
+        <!-- NEW: Added H1 and P for better storytelling -->
+        <div class="hero-text">
+            <h1>Your Next Home Awaits</h1>
+            <p>Discover rooms and flats for rent across Nepal. Simple, fast, and secure.</p>
+        </div>
+        
+        <a href="{% url 'home' %}" class="cta-button">Explore Listings</a>
     </div>
+
+    <!-- NEW: A simple, professional footer -->
+    <footer class="page-footer">
+        &copy; {% now "Y" %} BasoBas Nepal. All rights reserved.
+    </footer>
 
 </body>
 </html>

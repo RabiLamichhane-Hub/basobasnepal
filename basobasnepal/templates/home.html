@@ -82,13 +82,6 @@
                         <p><strong>Location:</strong> {{room.municipality}} {{room.ward_num}}, {{room.district}}</p>
                         <p><strong>Rooms:</strong> {{room.num_of_rooms_available}}</p>
                     </div>
-                    
-                    {% if request.user == room.owner %}
-                    <div class="card-footer">
-                        <a href="{% url 'edit' room.pk %}" class="butt btn-edit">Edit</a>
-                        <a href="{% url 'delete' room.pk %}" class="butt btn-delete">Delete</a>
-                    </div>
-                    {% endif %}
                 </div>
             {% endfor %}
         </div>

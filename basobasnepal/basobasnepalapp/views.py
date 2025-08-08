@@ -121,7 +121,7 @@ def edit(request, pk):
         form = RoomForm(request.POST, request.FILES, instance=room)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('your_rooms')
     else:
         form = RoomForm(instance=room)
 

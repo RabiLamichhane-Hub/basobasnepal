@@ -49,7 +49,9 @@
                 </div>
 
                 <!-- ADDED BUTTON -->
-                <a href="{% url 'booking' rooms.pk %}" class="cta-button">Book This Room</a>
+                {% if request.user != rooms.owner %}
+                    <a href="{% url 'booking' rooms.pk %}" class="cta-button">Book This Room</a>
+                {% endif %}
 
             </div>
 
