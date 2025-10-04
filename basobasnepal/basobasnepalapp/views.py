@@ -195,11 +195,13 @@ def booking(request, pk):
             booking_instance.save()
 
             return redirect('booking_successful', pk= room.pk)
+        else:
+            print(form.errors)
     else:
         form = BookingForm()
     return render(request, 'booking.html', {'room':room, 'form':form})
 
 def booking_successful(request, pk):
     room = get_object_or_404(Room, pk= pk)
-    booking = get_object_or_404(Booking, pk= pk)
+    booking = get_object_or_404(Booking, pk = pk)
     return render(request, 'booking_successful.html', {'room':room, 'booking': booking})
